@@ -12,6 +12,7 @@ use function htmlspecialchars;
 use Exception;
 use InvalidArgumentException;
 use Radar\Core\DataLimiter;
+use Radar\Validators\DataType;
 
 abstract class Validator
 {
@@ -29,7 +30,7 @@ abstract class Validator
         $this->allowNegativeNumber = true;
     }
 
-    abstract protected function validateEmptyData(int|string $givenData, string $dataType): array|bool;
+    abstract protected function validateEmptyData(int|string $givenData, DataType $dataType): array|bool;
 
     protected function filterSanitizedName(string $name): void
     {

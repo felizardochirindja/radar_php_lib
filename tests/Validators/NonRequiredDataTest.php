@@ -6,6 +6,7 @@ use Radar\Validators\NonRequiredData;
 use PHPUnit\Framework\TestCase;
 use Radar\Core\DataLimiter;
 use Radar\Core\DataPattern;
+use Radar\Validators\DataType;
 
 class NonRequiredDataTest extends TestCase
 {
@@ -182,7 +183,7 @@ class NonRequiredDataTest extends TestCase
     /** @test */
     public function emptyDataShouldReturnArrayIfGivenDataIsEmpty()
     {
-        $emptyData = $this->nonRequiredData->validateEmptyData('', 'name');
+        $emptyData = $this->nonRequiredData->validateEmptyData('', DataType::NAME);
         
         $expectedData = [
             'name' => '',
@@ -195,7 +196,7 @@ class NonRequiredDataTest extends TestCase
     /** @test */
     public function emptyDataShouldReturnFalseIfGivenDataIsNotEmpty()
     {
-        $result = $this->nonRequiredData->validateEmptyData('f', 'name');
+        $result = $this->nonRequiredData->validateEmptyData('f', DataType::NAME);
         $this->assertFalse($result);
     }
 
