@@ -4,6 +4,9 @@ namespace Radar\Core;
 
 use function strlen;
 
+/**
+ * esta classe faz validacoes que tem haver com o numero de caracteres ou digitos
+ */
 final class DataLimiter
 {
     private bool $useDelimitation;
