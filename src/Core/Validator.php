@@ -105,18 +105,13 @@ abstract class Validator
     }
 
     /** 
-     * filtra o dado usando os filtros nativos do php 
+     * filtra o dado usando os filtros nativos do php
      * 
-     * @param string $filter ex: FILTER_VALIDATE_EMAIL, FILTER_VALIDATE_URL
      * @throws InvalidArgumentException if the filter is invalid
     */
-    protected function filterDataByFilters(string $data, int $filter): void
+    protected function filterDataByFilters(string $data, DataFilter $filter): void
     {
-        if (!in_array(DataFiltersMap::Map[$filter], DataFiltersMap::Map)) {
-            throw new InvalidArgumentException("!invalid filter");
-        }
-
-        if (!filter_var($data, $filter)) {
+        if (!filter_var($data, $filter->value)) {
             $this->invalidDataError = $this->genericError;
             return;
         }

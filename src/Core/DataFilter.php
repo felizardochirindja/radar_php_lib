@@ -2,8 +2,8 @@
 
 namespace Radar\Core;
 
-class DataFilter
+enum DataFilter: int
 {
-    const Email = FILTER_VALIDATE_EMAIL;
-    const Url = FILTER_VALIDATE_URL;
+    case Email = FILTER_VALIDATE_EMAIL;
+    case Url = FILTER_VALIDATE_URL;
 }

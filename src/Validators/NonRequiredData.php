@@ -4,7 +4,6 @@ namespace Radar\Validators;
 
 use function is_array;
 use Radar\Core\DataFilter;
-use Radar\Core\DataFiltersMap;
 use Radar\Core\DataPattern;
 use Radar\Core\Validator;
 use Radar\Validatable;
@@ -100,7 +99,7 @@ final class NonRequiredData extends Validator implements Validatable
         return $this->sanitizeData($data);
     }
 
-    private function validateUsingFilters(string $data, string $error, string $dataType, int $filter): array
+    private function validateUsingFilters(string $data, string $error, string $dataType, DataFilter $filter): array
     {
         $sanitizedData = $this->validateWithoutFilter($data, $error, $dataType);
 
@@ -108,7 +107,7 @@ final class NonRequiredData extends Validator implements Validatable
             return $sanitizedData;
         }
 
-        $this->filterDataByFilters($sanitizedData, DataFiltersMap::Map[$filter]);
+        $this->filterDataByFilters($sanitizedData, $filter);
         
         $data = [
             $dataType => (string) $this->validData,
