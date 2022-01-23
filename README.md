@@ -1,2 +1,2 @@
 # Radar
-Validador de formulários HTML em PHP
+Validador de formulários
