@@ -113,19 +113,10 @@ abstract class Validator
         $this->dataLimiter->setDefaultConfiguration();
     }
 
-    protected function filterEmail(string $email) : void
+    protected function filterData(string $data, $filter) : void
     {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->validData = $email;
-        } else {
-            $this->invalidDataError = $this->genericError;
-        }
-    }
-
-    protected function filterUrl(string $url) : void
-    {
-        if (filter_var($url, FILTER_VALIDATE_URL)) {
-            $this->validData = $url;
+        if (filter_var($data, $filter)) {
+            $this->validData = $data;
         } else {
             $this->invalidDataError = $this->genericError;
         }

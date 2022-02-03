@@ -91,7 +91,7 @@ final class NonRequiredData extends Validator implements Validatable
         $this->genericError = $error;
 
         $sanitizedEmail = $this->sanitizeData($email);
-        $this->filterEmail($sanitizedEmail);
+        $this->filterData($sanitizedEmail, FILTER_VALIDATE_EMAIL);
         
         $emailData = [
             "email" => (string) $this->validData,
@@ -122,7 +122,7 @@ final class NonRequiredData extends Validator implements Validatable
         $this->genericError = $error;
 
         $sanitizedUrl = $this->sanitizeData($url);
-        $this->filterUrl($sanitizedUrl);
+        $this->filterData($sanitizedUrl, FILTER_VALIDATE_URL);
         
         $urlData = [
             "url"   => (string) $this->validData,
