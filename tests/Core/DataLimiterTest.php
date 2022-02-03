@@ -51,15 +51,6 @@ class DataLimiterTest extends TestCase
         $maxCharsProperty->setAccessible(true);
         $maxCharsProperty->setValue($dataLimiter, 5);
 
-        // simulando o metodo useLength();
-        // $useDelimitationProperty = $reflectionClass->getProperty('useDelimitation');
-        // $useDelimitationProperty->setAccessible(true);
-        // $useDelimitationProperty->setValue($dataLimiter, false);
-
-        // $charsNumberProperty = $reflectionClass->getProperty('charsNumber');
-        // $charsNumberProperty->setAccessible(true);
-        // $charsNumberProperty->setValue($dataLimiter, 5);
-
         // principal action
         $isProperlyLimited = $dataLimiter->isProperlyLimited($data);
 
