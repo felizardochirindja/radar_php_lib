@@ -7,15 +7,19 @@ require "../../vendor/autoload.php";
 
 class ValidatorTest extends TestCase
 {
-    public function isNumberNegativeTest() {
+    public function testIsNumberNegative() {
         // arrange
         $validatorMock = $this->getMockForAbstractClass(Validator::class);
         $isNumberNegativeMethod = self::getPrivateMethod($validatorMock, 'isNumberNegative');
         
-        
+        // act
+        $result = $isNumberNegativeMethod->invokeArgs($validatorMock, [-10]);
+
+        // assert
+        $this->assertTrue($result);
     }
 
-    public function sanitizeDataTest() {
+    public function testSanitizeData() {
 
     }
 
