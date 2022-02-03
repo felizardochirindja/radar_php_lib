@@ -18,4 +18,16 @@ class ValidatorTest extends TestCase
     public function sanitizeDataTest() {
 
     }
+
+    protected static function getPrivateMethod(
+        object $className,
+        string $methodName
+    ) : ReflectionMethod
+    {
+        $class = new ReflectionClass($className::class);
+        $method = $class->getMethod($methodName);
+        $method->setAccessible(true);
+
+        return $method;
+    }
 }
