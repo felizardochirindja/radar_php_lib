@@ -20,7 +20,15 @@ class ValidatorTest extends TestCase
     }
 
     public function testSanitizeData() {
+        // arrange
+        $validatorMock = $this->getMockForAbstractClass(Validator::class);
+        $sanitizeDataMethod = self::getPrivateMethod($validatorMock, 'sanitizeData');
 
+        // act
+        $result = $sanitizeDataMethod->invokeArgs($validatorMock, [' fsad<html> ']);
+
+        // assert
+        $this->assertSame('fsad&lt;html&gt;', $result);
     }
 
     protected static function getPrivateMethod(
