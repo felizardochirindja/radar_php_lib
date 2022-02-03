@@ -31,6 +31,14 @@ class ValidatorTest extends TestCase
         $this->assertSame('fsad&lt;html&gt;', $result);
     }
 
+    /**
+     * returns a private method from the given class
+     * 
+     * @param object $className name of the class to get the method
+     * @param $param string $methodName method to get
+     * 
+     * @return ReflectionMethod
+    */
     protected static function getPrivateMethod(
         object $className,
         string $methodName
