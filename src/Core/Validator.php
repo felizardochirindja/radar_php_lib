@@ -113,7 +113,7 @@ abstract class Validator
         $this->dataLimiter->setDefaultConfiguration();
     }
 
-    protected function filterData(string $data, $filter) : void
+    protected function filterDataByFilters(string $data, $filter) : void
     {
         if (filter_var($data, $filter)) {
             $this->validData = $data;
