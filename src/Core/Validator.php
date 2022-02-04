@@ -39,34 +39,35 @@ abstract class Validator
     {
         $isNameProperlyLimited = $this->dataLimiter->isProperlyLimited($name);
 
-        if ($isNameProperlyLimited) {
-            $this->filterName($name);
-        } else {
+        if (!$isNameProperlyLimited) {
             $this->invalidDataError = $this->dataLimiter->error;
+            return;
         }
-
+            
+        $this->filterName($name);
         $this->dataLimiter->setDefaultConfiguration();
     }
 
     private function filterName(string $name) : void
     {
-        if (preg_match("/^[a-zA-Z áàãéèíìóòõúùç]*$/", $name)) {
-            $this->validData = $name;
-        } else {
+        if (!preg_match("/^[a-zA-Z áàãéèíìóòõúùç]*$/", $name)) {
             $this->invalidDataError = $this->genericError;
-        }
+            return;
+        } 
+        
+        $this->validData = $name;
     }
     
     protected function filterSanitizedNumber(int | string $number) : void
     {
         $isNumberProperlyLimited = $this->dataLimiter->isProperlyLimited($number);
 
-        if ($isNumberProperlyLimited) {
-            $this->filterNumber($number);
-        } else {
+        if (!$isNumberProperlyLimited) {
             $this->invalidDataError = $this->dataLimiter->error;
+            return;
         }
-
+        
+        $this->filterNumber($number);
         $this->dataLimiter->setDefaultConfiguration();
     }
     
@@ -104,22 +105,23 @@ abstract class Validator
     {
         $isTextProperlyLimited = $this->dataLimiter->isProperlyLimited($text);
 
-        if ($isTextProperlyLimited) {
-            $this->validData = $text;
-        } else {
+        if (!$isTextProperlyLimited) {
             $this->invalidDataError = $this->dataLimiter->error;
+            return;
         }
 
+        $this->validData = $text;
         $this->dataLimiter->setDefaultConfiguration();
     }
 
     protected function filterDataByFilters(string $data, $filter) : void
     {
-        if (filter_var($data, $filter)) {
-            $this->validData = $data;
-        } else {
+        if (!filter_var($data, $filter)) {
             $this->invalidDataError = $this->genericError;
+            return;
         }
+        
+        $this->validData = $data;
     }
 
     // Elimita espaços em branco, baras invertidas e converte tags html em apenas strings
