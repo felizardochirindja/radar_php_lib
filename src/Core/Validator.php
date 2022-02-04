@@ -80,7 +80,7 @@ abstract class Validator
             return;
         }  
          
-        if ( !($this->allowNegativeNumber) || (!$this->isNumberNegative($number)) ) {
+        if ( !($this->allowNegativeNumber || !$this->isNumberNegative($number)) ) {
             $this->invalidDataError = $this->negativeNumberError;
             return;
         }
