@@ -73,16 +73,19 @@ abstract class Validator
     
     private function filterNumber(int | string $number) : void
     {
-        if (is_numeric($number)) {
-            if (($this->allowNegativeNumber) || (!$this->isNumberNegative($number))) {
-                $this->validData = $number;
-            } else {
-                $this->invalidDataError = $this->negativeNumberError;
-            }
-        } else {
+        if (!is_numeric($number)) {
             $this->invalidDataError = $this->genericError;
+            $this->allowNegativeNumber = true;
+            
+            return;
+        }  
+         
+        if ( !($this->allowNegativeNumber) || (!$this->isNumberNegative($number)) ) {
+            $this->invalidDataError = $this->negativeNumberError;
+            return;
         }
 
+        $this->validData = $number;
         $this->allowNegativeNumber = true;
     }
     
