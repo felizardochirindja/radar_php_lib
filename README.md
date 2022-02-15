@@ -1,2 +1,2 @@
 # Radar
-Validador de formulários
+Biblioteca PHP, para validar formulários de páginas web no back-end
