@@ -1,14 +1,15 @@
 # Radar
-Valida os seus formulários html no backend.
 
-radar é uma **biblioteca** escrita em php, totalmente orientada a objectos que permite a validação de formularios html no backend de uma forma mais fácil.
+**Valida os seus formulários html no backend.**
+
+Radar é uma **biblioteca** escrita em php, totalmente orientada a objectos que permite a validação de formularios html no backend de uma forma mais fácil.
 
 ## Uso Básico
 **O radar contém dois validadores**, um para campos obrigátorios e outro para campos não obrigátorios.
 
-**nota:** nos dois caso abaixo as funções de validação irão retornar um array contendo o erro caso o dado seja inválido ou o próprio dado caso este seja válido.
+**nota:** Nos dois casos abaixo as funções de validação irão retornar um array contendo o erro caso o dado seja inválido ou o próprio dado caso este seja válido.
 
-> Se o campo não for obrigatório
+* Se o campo não for obrigatório
 
 ```php
 use Radar\Validators\NonRequiredData;
@@ -20,7 +21,7 @@ echo $nameData['error'];
 echo $nameData['name'];
 ```
 
-> Se o campo for obrigatorio
+* Se o campo for obrigatorio
 ```php
 use Radar\Validators\RequiredData;
 
