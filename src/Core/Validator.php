@@ -137,6 +137,13 @@ abstract class Validator
         return $data;
     }
 
+    /**
+     * Define o número mínimo e máximo de caracteres ou de dígidos, dentro de uma cadeia de palavras ou números
+     * 
+     * @param int $minChars numero mínimo de caracteres ou dígitos
+     * @param int $maxChars número máximo de caracteres ou dígitos
+     * @param string $error mensagem caso o dado não obedecam o minimo e o maximo de caracteres/digitos
+    */
     public function setDelimitation(int $minChars, int $maxChars, string $error) : void
     {
         $this->dataLimiter->setDelimitation($minChars, $maxChars, $error);
