@@ -16,7 +16,7 @@ class RequiredDataTest extends TestCase
         $this->requiredData = new RequiredData(self::REQUIRED_DATA_ERROR);
     }
 
-    public function testValidateName()
+    public function testValidNameChars()
     {
         // arrange
         $name = "fefef";
@@ -37,6 +37,24 @@ class RequiredDataTest extends TestCase
         );
 
         $this->assertSame($expectedContent, $nameData);
+    }
+
+    public function testInvalidNameChars()
+    {
+        // arrange
+        $name = "ffe5";
+        $invalidCharsError = "Apenas letras";
+
+        // act
+        $nameData = $this->requiredData->validateName($name, $invalidCharsError);
+
+        // assert
+        $expetedNameData = [
+            'name'  => '',
+            'error' => $invalidCharsError
+        ];
+
+        $this->assertSame($expetedNameData, $nameData);
     }
 
     public function testValidateNumber()
