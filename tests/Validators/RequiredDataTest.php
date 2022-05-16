@@ -57,6 +57,46 @@ class RequiredDataTest extends TestCase
         $this->assertSame($expetedNameData, $nameData);
     }
 
+    public function testValidNameLength()
+    {
+        // arrange
+        $name = 'felizard';
+        $invalidCharsError = "Apenas letras";
+        $invalidLengthError = 'Numero invalido de characteres';
+
+        // act
+        $this->requiredData->setLength(8, $invalidLengthError);
+        $nameData = $this->requiredData->validateName($name, $invalidCharsError);
+
+        // assert
+        $expectedNameData = [
+            'name'  => $name,
+            'error' => ''
+        ];
+
+        $this->assertSame($expectedNameData, $nameData);
+    }
+
+    public function testInvalidNameLength()
+    {
+        // arrange
+        $name = 'felizard';
+        $invalidCharsError = "Apenas letras";
+        $invalidLengthError = 'Numero invalido de characteres';
+
+        // act
+        $this->requiredData->setLength(5, $invalidLengthError);
+        $nameData = $this->requiredData->validateName($name, $invalidCharsError);
+
+        // assert
+        $expectedNameData = [
+            'name'  => '',
+            'error' => $invalidLengthError
+        ];
+
+        $this->assertSame($expectedNameData, $nameData);
+    }
+
     public function testValidateNumber()
     {
         // arrange
