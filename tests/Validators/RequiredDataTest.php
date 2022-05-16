@@ -83,7 +83,7 @@ class RequiredDataTest extends TestCase
     public function testValidateURL()
     {
         // arrange
-        $url = "www.felizardo.com";
+        $url = "http://www.felizardo.com";
         $invalidemailError = "Formato inválido de url!";
         // $requiredUrlError = "A URL é obrigatória!";
 
