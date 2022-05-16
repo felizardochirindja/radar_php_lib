@@ -16,18 +16,17 @@ class RequiredDataTest extends TestCase
         $this->requiredData = new RequiredData(self::REQUIRED_DATA_ERROR);
     }
 
+    /**
+     * name tests
+     **/
+
     public function testValidNameChars()
     {
         // arrange
         $name = "fefef";
         $invalidNameError = "Apenas letras e espaços em branco!";
-        $invalidLengthError = "Digite apenas 5 caracteres!";
-        $limitCharsError = "Digite de 5 a 10 caracteres apenas!";
-        // $requiredNameError = "O nome é obrigatório!";
 
         // act
-        $this->requiredData->setLength(5, $invalidLengthError);
-        // $this->data->limitChars(5, 10, $limitCharsError);
         $nameData = $this->requiredData->validateName($name, $invalidNameError);
 
         // assert
@@ -92,6 +91,46 @@ class RequiredDataTest extends TestCase
         $expectedNameData = [
             'name'  => '',
             'error' => $invalidLengthError
+        ];
+
+        $this->assertSame($expectedNameData, $nameData);
+    }
+    
+    public function testValidNameDelimitation()
+    {
+        // arrange
+        $name = 'feliz';
+        $invalidCharsError = "Apenas letras e espacos em branco";
+        $delimitationError = 'caracteres de 4 a 8';
+
+        // act
+        $this->requiredData->setDelimitation(4, 8, $delimitationError);
+        $nameData = $this->requiredData->validateName($name, $invalidCharsError);
+
+        // assert
+        $expectedNameData = [
+            'name'  => $name,
+            'error' => ''
+        ];
+
+        $this->assertSame($expectedNameData, $nameData);
+    }
+
+    public function testInvalidNameDelimitation()
+    {
+        // arrange
+        $name = 'felizardo';
+        $invalidCharsError = "Apenas letras e espacos em branco";
+        $delimitationError = 'caracteres de 4 a 8';
+
+        // act
+        $this->requiredData->setDelimitation(4, 7, $delimitationError);
+        $nameData = $this->requiredData->validateName($name, $invalidCharsError);
+
+        // assert
+        $expectedNameData = [
+            'name'  => '',
+            'error' => $delimitationError
         ];
 
         $this->assertSame($expectedNameData, $nameData);
