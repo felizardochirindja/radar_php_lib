@@ -194,12 +194,11 @@ class RequiredDataTest extends TestCase
         $this->assertSame($expectedContent, $emailData);
     }
 
-    public function testValidateURL()
+    public function testValidURL()
     {
         // arrange
         $url = "http://www.felizardo.com";
         $invalidemailError = "Formato inválido de url!";
-        // $requiredUrlError = "A URL é obrigatória!";
 
         // act
         $urlData = $this->requiredData->validateUrl($url, $invalidemailError);
@@ -208,6 +207,24 @@ class RequiredDataTest extends TestCase
         $expectedContent = array(
             "url"   => $url,
             "error" => ""
+        );
+
+        $this->assertSame($expectedContent, $urlData) ;
+    }
+
+    public function testInvalidURL()
+    {
+        // arrange
+        $url = "://ww.felizardo";
+        $invalidEmailError = "Formato inválido de url!";
+
+        // act
+        $urlData = $this->requiredData->validateUrl($url, $invalidEmailError);
+
+        // assert
+        $expectedContent = array(
+            'url'   => '',
+            'error' => $invalidEmailError,
         );
 
         $this->assertSame($expectedContent, $urlData) ;
