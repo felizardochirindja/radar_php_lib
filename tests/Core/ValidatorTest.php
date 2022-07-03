@@ -7,7 +7,7 @@ require "../../vendor/autoload.php";
 
 class ValidatorTest extends TestCase
 {
-    public function testIsNumberNegative() {
+    public function testIsNumberNegativeMustReturnTrue() {
         // arrange
         $validatorMock = $this->getMockForAbstractClass(Validator::class);
         $isNumberNegativeMethod = self::getPrivateMethod($validatorMock, 'isNumberNegative');
@@ -19,7 +19,19 @@ class ValidatorTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testSanitizeData() {
+    public function testIsNumberNegativeMustReturnFalse() {
+        // arrange
+        $validatorMock = $this->getMockForAbstractClass(Validator::class);
+        $isNumberNegativeMethod = self::getPrivateMethod($validatorMock, 'isNumberNegative');
+        
+        // act
+        $result = $isNumberNegativeMethod->invokeArgs($validatorMock, [10]);
+
+        // assert
+        $this->assertFalse($result);
+    }
+
+    public function testSanitizeDataMustReturnModifiedHtml() {
         // arrange
         $validatorMock = $this->getMockForAbstractClass(Validator::class);
         $sanitizeDataMethod = self::getPrivateMethod($validatorMock, 'sanitizeData');
