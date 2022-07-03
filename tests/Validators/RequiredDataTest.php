@@ -136,7 +136,7 @@ class RequiredDataTest extends TestCase
         $this->assertSame($expectedNameData, $nameData);
     }
 
-    public function testValidateNumber()
+    public function testValidaNumber()
     {
         // arrange
         $number = 44444;
@@ -158,12 +158,11 @@ class RequiredDataTest extends TestCase
         $this->assertSame($expectedContent, $numberData);
     }
 
-    public function testValidateEmail()
+    public function testValidEmail()
     {
         // arrange
         $email = "felizardo@gmail.com";
         $invalidEmailError = "Formato inválido de email!";
-        // $requiredEmailError = "O nome é obrigatório!";
 
         // act
         $emailData = $this->requiredData->validateEmail($email, $invalidEmailError);
@@ -172,6 +171,24 @@ class RequiredDataTest extends TestCase
         $expectedContent = array(
             "email" => $email,
             "error" => ""
+        );
+
+        $this->assertSame($expectedContent, $emailData);
+    }
+
+    public function testInvalidEmail()
+    {
+        // arrange
+        $email = "felizardo.com";
+        $invalidEmailError = "Formato inválido de email!";
+
+        // act
+        $emailData = $this->requiredData->validateEmail($email, $invalidEmailError);
+
+        // assert
+        $expectedContent = array(
+            "email" => '',
+            "error" => $invalidEmailError,
         );
 
         $this->assertSame($expectedContent, $emailData);
