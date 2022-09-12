@@ -17,8 +17,7 @@ use Radar\Validators\RequiredData;
 $nonRequiredData = new RequiredData();
 $nameData = $this->nonRequiredData->validateName('felizardo', 'nome invalido');
 
-echo $nameData['error'];
-echo $nameData['name'];
+var_dump($nameData);
 ```
 
 * Se o campo for obrigatorio
@@ -30,8 +29,7 @@ $nonRequiredData->setLenght(2, 6, 'apenas caracteres entre 2 e 6');
 
 $passwordData = $this->nonRequiredData->validatePassword('', 'password invalida');
 
-echo $passwordData['error'];
-echo $passwordData['password'];
+var_dump($passwordData);
 ```
 
 A função `setlenght()` estabelece uma delimitacao entre os caracteres e caso a delemitacao for respeitada um erro sera retorno pela funcao `validatePassword()`.
