@@ -12,9 +12,9 @@ Radar é uma **biblioteca** escrita em php, totalmente orientada a objectos que 
 * Se o campo não for obrigatório
 
 ```php
-use Radar\Validators\NonRequiredData;
+use Radar\Validators\RequiredData;
 
-$nonRequiredData = new NonRequiredData();
+$nonRequiredData = new RequiredData();
 $nameData = $this->nonRequiredData->validateName('felizardo', 'nome invalido');
 
 echo $nameData['error'];
