@@ -11,6 +11,9 @@
             "role": "developer"
         }
     ],
+    "scripts": {
+        "tests": "php ./vendor/bin/phpunit ./tests/Validators/ --colors"
+    },
     "autoload": {
         "psr-4": {
             "Radar\\": "src/"
