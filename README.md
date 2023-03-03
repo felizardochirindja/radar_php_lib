@@ -1,6 +1,6 @@
 # Radar
 
-**Valida os seus formulários html no backend.**
+**Valida os seus dados de forma simpes.**
 
 Radar é uma **biblioteca** escrita em php, totalmente orientada a objectos que permite a validação de formularios html no backend de uma forma mais fácil.
 
@@ -17,7 +17,7 @@ use Radar\Validators\RequiredData;
 $nonRequiredData = new NonRequiredData();
 $nonRequiredData->setLenght(2, 6, 'apenas caracteres entre 2 e 6');
 
-$passwordData = $this->nonRequiredData->validatePassword('', 'password invalida');
+$passwordData = $this->nonRequiredData->validateString('', 'password invalida');
 
 var_dump($passwordData);
 
