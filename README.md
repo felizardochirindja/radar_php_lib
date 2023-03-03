@@ -14,22 +14,40 @@ Radar é uma **biblioteca** escrita em php, totalmente orientada a objectos que 
 ```php
 use Radar\Validators\RequiredData;
 
-$nonRequiredData = new RequiredData();
-$nameData = $this->nonRequiredData->validateName('felizardo', 'nome invalido');
+$nonRequiredData = new NonRequiredData();
+$nonRequiredData->setLenght(2, 6, 'apenas caracteres entre 2 e 6');
 
-var_dump($nameData);
+$passwordData = $this->nonRequiredData->validatePassword('', 'password invalida');
+
+var_dump($passwordData);
+
+/**
+ * resultado
+ * 
+ * [
+ *      'name' => '',
+ *      'error' => 'apenas caracteres entre 2 e 6'
+ * ]
+*/
 ```
 
 * Se o campo for obrigatorio
 ```php
 use Radar\Validators\RequiredData;
 
-$nonRequiredData = new NonRequiredData('este campo é obrigatório');
-$nonRequiredData->setLenght(2, 6, 'apenas caracteres entre 2 e 6');
+$requiredData = new RequiredData('este campo é obrigatório');
+$nameData = $this->requiredData->validateName('felizardo', 'nome invalido');
 
-$passwordData = $this->nonRequiredData->validatePassword('', 'password invalida');
+var_dump($nameData);
 
-var_dump($passwordData);
+/**
+ * resultado
+ * 
+ * [
+ *      'name' => 'felizardo',
+ *      'error' => ''
+ * ]
+*/
 ```
 
 A função `setlenght()` estabelece uma delimitacao entre os caracteres e caso a delemitacao for respeitada um erro sera retorno pela funcao `validatePassword()`.
