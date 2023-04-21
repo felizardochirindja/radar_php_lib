@@ -25,7 +25,7 @@ var_dump($passwordData);
  * resultado
  * 
  * [
- *      'name' => '',
+ *      'chars' => '',
  *      'error' => 'apenas caracteres entre 2 e 6'
  * ]
 */
