@@ -23,21 +23,20 @@ final class DataLimiter
      * insert the default values to the minumun characters, maximus characters and useDelimitation atributes,
      * mininum charactes : 1, maximus characteres : 50, useDelimitation : true
     */
-    public function setDefaultConfiguration() : void
+    public function setDefaultConfiguration(): void
     {
-        $this->minChars        = 1;
-        $this->maxChars        = 50;
+        $this->minChars = 1;
+        $this->maxChars = 50;
         $this->useDelimitation = true;
     }
 
     /**
-     * verify if the given string has the exact number of caracters
+     * verify if the given data has the correct number of characters
      * 
-     * @param string $data the string to verify the number os caracts
+     * @param string $data the string to verify the number os characters
      * 
-     * @return bool
     */
-    public function isProperlyLimited(string $data) : bool
+    public function isProperlyLimited(string $data): bool
     {
         if ($this->useDelimitation && 
             $this->hasMinMaxChars($data)) {
@@ -52,27 +51,24 @@ final class DataLimiter
     }
 
     /**
-     * verifica se a string data tem pelo menos os caracteres minimos
-     * e não excede os caractere máximos desejados
+     * verifica se a string tem pelo menos os caracteres minimos
+     * e não excede os caracteres máximos desejados
      * 
      * @param string $data string to be verified
-     * 
-     * @return bool
     */
-    private function hasMinMaxChars(string $data) : bool
+    private function hasMinMaxChars(string $data): bool
     {
-        return $this->hasMinChars($data) &&
-               !$this->hasMoreThanMaxChars($data);
+        return
+            $this->hasMinChars($data) &&
+            !$this->hasMoreThanMaxChars($data);
     }
     
     /**
      * verity if the given string has the mininum characters wanted
      * 
      * @param string $data the string to be verified
-     * 
-     * @return bool
     */
-    private function hasMinChars(string $data) : bool
+    private function hasMinChars(string $data): bool
     {
         return strlen($data) >= $this->minChars;
     }
@@ -81,10 +77,8 @@ final class DataLimiter
      * verity if the given string has the more than maximum characters wanted
      * 
      * @param string $data the string to be verified
-     * 
-     * @return bool
     */
-    private function hasMoreThanMaxChars(string $data) : bool
+    private function hasMoreThanMaxChars(string $data): bool
     {
         return strlen($data) > $this->maxChars;
     }
@@ -98,7 +92,7 @@ final class DataLimiter
      * 
      * @throws InvalidArgumentException
     */
-    public function setDelimitation(int $minChars, int $maxChars, string $error) : void
+    public function setDelimitation(int $minChars, int $maxChars, string $error): void
     {
         if (($minChars <= 0) || ($maxChars <= 0)) {
             throw new \InvalidArgumentException("minChars or maxChars must not be less than 1!");
@@ -114,7 +108,7 @@ final class DataLimiter
 
         $this->minChars = $minChars;
         $this->maxChars = $maxChars;
-        $this->error    = $error;
+        $this->error = $error;
     }
 
     /**
@@ -132,7 +126,7 @@ final class DataLimiter
         }
 
         $this->useDelimitation = false;
-        $this->charsNumber     = $lenght;
-        $this->error           = $error;
+        $this->charsNumber = $lenght;
+        $this->error = $error;
     }
 }

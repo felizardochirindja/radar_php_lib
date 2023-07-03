@@ -15,8 +15,6 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @param string $name nome a ser validado
      * @param string $error erro caso o nome seja inválido
-     * 
-     * @return array
     */
     public function validateName(string $name, string $error) : array
     {
@@ -165,7 +163,7 @@ final class NonRequiredData extends Validator implements Validatable
     }
 
     /**
-     * returna um array com string vazia em todos os indices,
+     * retorna um array com string vazia em todos os indices,
      * caso seja entrege um dado vazio
      * 
      * @param int|string $givenData data to be verified if is empty
