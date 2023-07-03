@@ -2,7 +2,7 @@
 
 **Valida os seus dados de forma simpes.**
 
-Radar é uma **biblioteca** escrita em php, totalmente orientada a objectos que permite a validação de formularios html no backend de uma forma mais fácil.
+Radar é uma **biblioteca** escrita em php, totalmente orientada a objectos que permite a validação dados de uma forma fácil.
 
 ## Uso Básico
 **O radar contém dois validadores**, um para campos obrigátorios e outro para campos não obrigátorios.
