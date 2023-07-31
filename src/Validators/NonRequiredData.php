@@ -16,21 +16,19 @@ final class NonRequiredData extends Validator implements Validatable
      * @param string $name nome a ser validado
      * @param string $error erro caso o nome seja inválido
     */
-    public function validateName(string $name, string $error) : array
+    public function validateName(string $name, string $error): array
     {
-        $arrayWithoutValues = $this->validateEmptyData($name, "name");
+        $dataType = 'name';
+        $sanitizedName = $this->validateWithoutFilter($name, $error, $dataType);
 
-        if (is_array($arrayWithoutValues)) {
-            return $arrayWithoutValues;
+        if (is_array($sanitizedName)) {
+            return $sanitizedName;
         }
 
-        $this->genericError = $error;
-
-        $sanitizedName = $this->sanitizeData($name);
         $this->filterSanitizedName($sanitizedName);
 
         $nameData = [
-            "name"  => (string) $this->validData,
+            $dataType => (string) $this->validData,
             "error" => $this->invalidDataError
         ];
 
@@ -38,7 +36,7 @@ final class NonRequiredData extends Validator implements Validatable
 
         return $nameData;
     }
-    
+
     /**
      * valida um número
      * 
@@ -47,21 +45,19 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @return array
     */
-    public function validateNumber(int | string $number, string $error) : array
+    public function validateNumber(int | string $number, string $error): array
     {
-        $arrayWithoutValues = $this->validateEmptyData($number, "number");
+        $dataType = 'number';
+        $sanitizedNumber = $this->validateWithoutFilter($number, $error, $dataType);
 
-        if (is_array($arrayWithoutValues)) {
-            return $arrayWithoutValues;
+        if (is_array($sanitizedNumber)) {
+            return $sanitizedNumber;
         }
-
-        $this->genericError = $error;
-
-        $sanitizedNumber = $this->sanitizeData($number);
+        
         $this->filterSanitizedNumber($sanitizedNumber);
         
         $numberData = [
-            "number" => (int) $this->validData,
+            $dataType => (int) $this->validData,
             "error"  => $this->invalidDataError
         ];
         
@@ -78,27 +74,9 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @param array
     */
-    public function validateEmail(string $email, string $error) : array
+    public function validateEmail(string $email, string $error): array
     {
-        $arrayWithoutValues = $this->validateEmptyData($email, "email");
-
-        if (is_array($arrayWithoutValues)) {
-            return $arrayWithoutValues;
-        }
-
-        $this->genericError = $error;
-
-        $sanitizedEmail = $this->sanitizeData($email);
-        $this->filterDataByFilters($sanitizedEmail, FILTER_VALIDATE_EMAIL);
-        
-        $emailData = [
-            "email" => (string) $this->validData,
-            "error" => $this->invalidDataError
-        ];
-        
-        $this->emptyError();
-
-        return $emailData;
+        return $this->validateUsingFilters($email, $error, 'email', FILTER_VALIDATE_EMAIL);
     }
 
     /**
@@ -109,9 +87,14 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @return array
     */
-    public function validateURL(string $url, string $error) : array
+    public function validateURL(string $url, string $error): array
     {
-        $arrayWithoutValues = $this->validateEmptyData($url, "url");
+        return $this->validateUsingFilters($url, $error, 'url', FILTER_VALIDATE_URL);
+    }
+
+    private function validateWithoutFilter(string $data, string $error, string $dataType): string|int|array
+    {
+        $arrayWithoutValues = $this->validateEmptyData($data, $dataType);
 
         if (is_array($arrayWithoutValues)) {
             return $arrayWithoutValues;
@@ -119,17 +102,27 @@ final class NonRequiredData extends Validator implements Validatable
 
         $this->genericError = $error;
 
-        $sanitizedUrl = $this->sanitizeData($url);
-        $this->filterDataByFilters($sanitizedUrl, FILTER_VALIDATE_URL);
+        return $this->sanitizeData($data);
+    }
+
+    private function validateUsingFilters(string $data, string $error, string $dataType, $filter): array
+    {
+        $sanitizedData = $this->validateWithoutFilter($data, $error, $dataType);
+
+        if (is_array($sanitizedData)) {
+            return $sanitizedData;
+        }
+
+        $this->filterDataByFilters($sanitizedData, $filter);
         
-        $urlData = [
-            "url"   => (string) $this->validData,
+        $data = [
+            $dataType => (string) $this->validData,
             "error" => $this->invalidDataError
         ];
-
+        
         $this->emptyError();
 
-        return $urlData;
+        return $data;
     }
 
     /**
@@ -141,7 +134,7 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @return array
     */
-    public function validateString(int | string $chars) : array
+    public function validateString(int | string $chars): array
     {
         $emptyValidatedData = $this->validateEmptyData($chars, "chars");
 
@@ -168,13 +161,8 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @param int|string $givenData data to be verified if is empty
      * @param string $dataType type of data to be validated, that will be used as a index of first item in the array (types normaly used: name, url, email, password)
-     * 
-     * @return array|false
     */
-    protected function validateEmptyData(
-        int | string $givenData,
-        string $dataType
-    ) : array | false
+    public function validateEmptyData(int|string $givenData, string $dataType): array|false
     {
         if (empty($givenData)) {
             $data = [

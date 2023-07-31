@@ -9,35 +9,45 @@ class NonRequiredDataTest extends TestCase
 {
     private NonRequiredData $nonRequiredData;
 
-    public function __construct()
+    function __construct()
     {
         parent::__construct();
         $this->nonRequiredData = new NonRequiredData();
     }
 
-    public function testValidateName()
+    /** @test */
+    function theNameCharactersShoulbBeValid()
     {
-        // arrange
         $name = "fffff";
         $invalidNameError = "Apenas letras e espaços em branco!";
-        $invalidLengthError = "Digite apenas 5 caracteres!";
-        $limitCharsError = "Digite de 4 a 6 caracteres apenas!";
 
-        // act
-        // $this->nonRequiredData->setLength(5, $invalidLengthError);
-        $this->nonRequiredData->setDelimitation(4, 6, $limitCharsError);
         $nameData = $this->nonRequiredData->validateName($name, $invalidNameError);
 
-        // assert
-        $expectedContent = array(
+        $expectedContent = [
             "name"  => $name,
-            "error" => ""
-        );
+            "error" => "",
+        ];
 
         $this->assertSame($expectedContent, $nameData);
     }
 
-    public function testValidateNumber()
+    /** @test */
+    function theNameCharactersShoulbBeInvalid()
+    {
+        $name = "fffff0";
+        $invalidNameError = "Apenas letras e espaços em branco!";
+
+        $nameData = $this->nonRequiredData->validateName($name, $invalidNameError);
+
+        $expectedContent = [
+            "name"  => '',
+            "error" => $invalidNameError,
+        ];
+
+        $this->assertSame($expectedContent, $nameData);
+    }
+
+    function testValidateNumber()
     {
         // arrange
         $number = "55";
@@ -61,7 +71,7 @@ class NonRequiredDataTest extends TestCase
         $this->assertSame($expectedContent, $numberData);
     }
 
-    public function testValidateEmail()
+    function testValidateEmail()
     {
         // arrange
         $email = "felizardo@gmail.com";
@@ -79,7 +89,7 @@ class NonRequiredDataTest extends TestCase
         $this->assertSame($expectedContent, $emailData);
     }
 
-    public function testValidateURL()
+    function testValidateURL()
     {
         // arrange
         $url = "https://www.felizardo.com";
@@ -97,7 +107,7 @@ class NonRequiredDataTest extends TestCase
         $this->assertSame($expectedContent, $urlData) ;
     }
 
-    public function testValidateString()
+    function testValidateString()
     {
         // arrange
         $string = "";
@@ -116,5 +126,23 @@ class NonRequiredDataTest extends TestCase
         );
 
         $this->assertSame($expectedContent, $stringData);
+    }
+
+    function testValidateEmptyData()
+    {
+        $emptyData = $this->nonRequiredData->validateEmptyData('', 'name');
+        $expectedData = [
+            'name' => '',
+            'error' => '',
+        ];
+
+        $this->assertSame($expectedData, $emptyData);
+    }
+
+    /** @test */
+    function validateEmptyDataShouldReturnFalseIfGivenDataIsNotEmpty()
+    {
+        $result = $this->nonRequiredData->validateEmptyData('f', 'name');
+        $this->assertFalse($result);
     }
 }
