@@ -34,7 +34,6 @@ final class DataLimiter
      * verify if the given data has the correct number of characters
      * 
      * @param string $data the string to verify the number os characters
-     * 
     */
     public function isProperlyLimited(string $data): bool
     {
@@ -119,7 +118,7 @@ final class DataLimiter
      * 
      * @throws InvalidArgumentException
     */
-    public function setLength(int $lenght, string $error) : void
+    public function setLength(int $lenght, string $error): void
     {
         if ($lenght <= 0) {
             throw new \InvalidArgumentException("Lenght must not be less than 1!");
