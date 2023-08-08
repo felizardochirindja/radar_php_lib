@@ -4,7 +4,7 @@ namespace Radar\Validators;
 
 use function is_array;
 use Radar\Core\Validator;
-use Radar\Contracts\Validatable;
+use Radar\Validatable;
 
 require __DIR__. "/../../vendor/autoload.php";
 
