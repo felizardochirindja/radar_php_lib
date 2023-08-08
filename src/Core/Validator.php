@@ -14,7 +14,7 @@ require __DIR__ . "/../../vendor/autoload.php";
 
 abstract class Validator
 {
-    protected int | string $validData;
+    protected int|string $validData;
     private bool $allowNegativeNumber;
     
     private DataLimiter $dataLimiter;
@@ -30,7 +30,7 @@ abstract class Validator
         $this->dataLimiter = new DataLimiter();
     }
 
-    abstract protected function validateEmptyData(int | string $givenData, string $dataType): array|bool;
+    abstract protected function validateEmptyData(int|string $givenData, string $dataType): array|bool;
 
     protected function filterSanitizedName(string $name): void
     {
@@ -79,19 +79,16 @@ abstract class Validator
         $this->allowNegativeNumber = true;
     }
     
+    /** esta funcao deve ser chamada antes de validar um numero. ela garente que o numero nao seja negativo */
     public function denyNegativeNumber(string $error): void
-    {   
+    {
         $this->allowNegativeNumber = false;
         $this->negativeNumberError = $error;
     }
 
     private function isNumberNegative(int $number): bool
     {
-        if ($number < 0) {
-            return true;
-        }
-        
-        return false;
+        return ($number < 0);
     }
     
     protected function filterSanitizedText(string|int $text): void
@@ -104,6 +101,11 @@ abstract class Validator
         $this->dataLimiter->setDefaultConfiguration();
     }
 
+    /** 
+     * filtra o dado usando os filtros nativos do php 
+     * 
+     * @param string $filter ex: FILTER_VALIDATE_EMAIL, FILTER_VALIDATE_URL
+    */
     protected function filterDataByFilters(string $data, $filter): void
     {
         if (!filter_var($data, $filter)) {
@@ -115,7 +117,7 @@ abstract class Validator
     }
 
     /** Elimita espaços em branco, baras invertidas e converte tags html */
-    protected function sanitizeData(int|string $data): int | string
+    protected function sanitizeData(int|string $data): int|string
     {
         $data = trim($data);
         $data = stripslashes($data);

@@ -4,7 +4,7 @@ namespace Radar\Validators;
 
 use function is_array;
 use Radar\Core\Validator;
-use Radar\Contracts\Validatable;
+use Radar\Validatable;
 
 require __DIR__ . "/../../vendor/autoload.php";
 
@@ -42,8 +42,6 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @param string $number número a ser validado
      * @param string $error erro caso o número seja inválido
-     * 
-     * @return array
     */
     public function validateNumber(int | string $number, string $error): array
     {
@@ -57,8 +55,8 @@ final class NonRequiredData extends Validator implements Validatable
         $this->filterSanitizedNumber($sanitizedNumber);
         
         $numberData = [
-            $dataType => (int) $this->validData,
-            "error"  => $this->invalidDataError
+            $dataType => empty($this->validData) ? '' : (int) $this->validData,
+            "error" => $this->invalidDataError
         ];
         
         $this->emptyError();
@@ -71,8 +69,6 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @param string $email email a ser validado
      * @param string $error erro caso o email seja inválido
-     * 
-     * @param array
     */
     public function validateEmail(string $email, string $error): array
     {
@@ -84,8 +80,6 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @param string $url url a ser validada
      * @param string $error erro caso a url seja inválida
-     * 
-     * @return array
     */
     public function validateURL(string $url, string $error): array
     {
@@ -131,8 +125,6 @@ final class NonRequiredData extends Validator implements Validatable
      * 
      * @param string $chars caracteres a serem validados
      * @param string $error erro caso os caracteres sejam inválidos
-     * 
-     * @return array
     */
     public function validateString(int | string $chars): array
     {
