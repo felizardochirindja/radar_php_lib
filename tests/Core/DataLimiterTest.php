@@ -34,15 +34,14 @@ class DataLimiterTest extends TestCase
         $this->assertEquals(50, $maxCharsValue);
     }
 
-    public function testIsProperlyLimited()
+    /** @test */
+    public function dataShouldBeProperlyLimited()
     {
-        // arange
-        $dataLimiter     = new DataLimiter();
+        $dataLimiter = new DataLimiter();
         $reflectionClass = new ReflectionClass($dataLimiter::class);
 
-        $data = 'ffff';
+        $data = 'ff';
 
-        // act
         $minCharsProperty = $reflectionClass->getProperty('minChars');
         $minCharsProperty->setAccessible(true);
         $minCharsProperty->setValue($dataLimiter, 2);
@@ -51,33 +50,33 @@ class DataLimiterTest extends TestCase
         $maxCharsProperty->setAccessible(true);
         $maxCharsProperty->setValue($dataLimiter, 5);
 
-        // principal action
         $isProperlyLimited = $dataLimiter->isProperlyLimited($data);
+        
+        $dataLimiter->setDelimitation(2, 5, '');
 
-        // assert
         $this->assertTrue($isProperlyLimited);
     }
 
     public function testSetDelimitation()
     {
         // arange
-        $dataLimiter     = new DataLimiter();
+        $dataLimiter = new DataLimiter();
         $reflectionClass = new ReflectionClass($dataLimiter::class);
 
         $minChars = 2;
         $maxChars = 4;
-        $error    = 'Digite entre 2 a 4 caracteres!';
+        $error = 'Digite entre 2 a 4 caracteres!';
         
         // act
         $dataLimiter->setDelimitation($minChars, $maxChars, $error);
 
         $minCharsProperty = $reflectionClass->getProperty('minChars');
         $minCharsProperty->setAccessible(true);
-        $minCharsValue    = $minCharsProperty->getValue($dataLimiter);
+        $minCharsValue = $minCharsProperty->getValue($dataLimiter);
 
         $maxCharsProperty = $reflectionClass->getProperty('maxChars');
         $maxCharsProperty->setAccessible(true);
-        $maxCharsValue    = $maxCharsProperty->getValue($dataLimiter);
+        $maxCharsValue = $maxCharsProperty->getValue($dataLimiter);
 
         $useDelimitationProperty = $reflectionClass->getProperty('useDelimitation');
         $useDelimitationProperty->setAccessible(true);
@@ -93,12 +92,12 @@ class DataLimiterTest extends TestCase
     public function testSetLength()
     {
         // arange
-        $dataLimiter     = new DataLimiter();
+        $dataLimiter = new DataLimiter();
         $reflectionClass = new ReflectionClass($dataLimiter::class);
 
-        $data   = 'Felix';
+        $data = 'Felix';
         $length = 5;
-        $error  = 'Apenas 5 caracteres!';
+        $error = 'Apenas 5 caracteres!';
 
         // act
         $dataLimiter->setLength($length, $error);
