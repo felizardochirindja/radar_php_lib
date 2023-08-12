@@ -43,7 +43,7 @@ final class NonRequiredData extends Validator implements Validatable
      * @param string $number número a ser validado
      * @param string $error erro caso o número seja inválido
     */
-    public function validateNumber(int | string $number, string $error): array
+    public function validateNumber(int|string $number, string $error): array
     {
         $dataType = 'number';
         $sanitizedNumber = $this->validateWithoutFilter($number, $error, $dataType);
@@ -126,7 +126,7 @@ final class NonRequiredData extends Validator implements Validatable
      * @param string $chars caracteres a serem validados
      * @param string $error erro caso os caracteres sejam inválidos
     */
-    public function validateString(int | string $chars): array
+    public function validateString(int|string $chars): array
     {
         $emptyValidatedData = $this->validateEmptyData($chars, "chars");
 
