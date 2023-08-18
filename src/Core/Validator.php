@@ -10,24 +10,20 @@ use function stripslashes;
 use function htmlspecialchars;
 use Radar\Core\DataLimiter;
 
-require __DIR__ . "/../../vendor/autoload.php";
-
 abstract class Validator
 {
     protected int|string $validData;
     private bool $allowNegativeNumber;
     
-    private DataLimiter $dataLimiter;
-
     protected string $invalidDataError;
     private string $negativeNumberError;
     protected string $genericError;
 
-    public function __construct() {
+    public function __construct(private DataLimiter $dataLimiter)
+    {
         $this->emptyValidData();
         $this->emptyError();
         $this->allowNegativeNumber = true;
-        $this->dataLimiter = new DataLimiter();
     }
 
     abstract protected function validateEmptyData(int|string $givenData, string $dataType): array|bool;

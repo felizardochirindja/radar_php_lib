@@ -4,15 +4,16 @@ require  __DIR__ . "/../../vendor/autoload.php";
 
 use Radar\Validators\NonRequiredData;
 use PHPUnit\Framework\TestCase;
+use Radar\Core\DataLimiter;
 
 class NonRequiredDataTest extends TestCase
 {
     private NonRequiredData $nonRequiredData;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
-        $this->nonRequiredData = new NonRequiredData();
+        $this->nonRequiredData = new NonRequiredData(new DataLimiter);
     }
 
     /** @test */
