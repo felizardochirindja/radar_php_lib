@@ -6,8 +6,6 @@ use function is_array;
 use Radar\Core\Validator;
 use Radar\Validatable;
 
-require __DIR__ . "/../../vendor/autoload.php";
-
 final class NonRequiredData extends Validator implements Validatable
 {
     /**
@@ -152,14 +150,15 @@ final class NonRequiredData extends Validator implements Validatable
      * caso seja entrege um dado vazio
      * 
      * @param int|string $givenData data to be verified if is empty
-     * @param string $dataType type of data to be validated, that will be used as a index of first item in the array (types normaly used: name, url, email, password)
+     * @param string $dataType type of data to be validated, that will be used as a index of first item in the array
+     * (types normaly used: name, url, email, chars)
     */
     public function validateEmptyData(int|string $givenData, string $dataType): array|false
     {
         if (empty($givenData)) {
             $data = [
                 $dataType => "",
-                "error"   => ""
+                "error" => ""
             ];
 
             return $data;
