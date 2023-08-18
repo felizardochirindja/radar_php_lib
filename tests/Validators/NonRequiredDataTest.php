@@ -197,4 +197,20 @@ class NonRequiredDataTest extends TestCase
         $result = $this->nonRequiredData->validateEmptyData('f', 'name');
         $this->assertFalse($result);
     }
+
+    /** @test */
+    public function stringShouldMatchTheGivenPatern()
+    {
+        $pattern = new DataPattern(2, 2, 1);
+        $pattern->acceptedSpecialChars = '%#&';
+        
+        $result = $this->nonRequiredData->validateString('aA#1', 'string doesnt match the pattern', $pattern);
+
+        $expectedData = [
+            'chars' => 'aA#1',
+            'error' => '',
+        ];
+
+        $this->assertSame($expectedData, $result);
+    }
 }
