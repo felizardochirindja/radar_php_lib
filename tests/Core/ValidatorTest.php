@@ -7,39 +7,33 @@ require "../../vendor/autoload.php";
 
 class ValidatorTest extends TestCase
 {
-    public function testIsNumberNegativeMustReturnTrue() {
-        // arrange
+    public function testIsNumberNegativeMustReturnTrue()
+    {
         $validatorMock = $this->getMockForAbstractClass(Validator::class);
         $isNumberNegativeMethod = self::getPrivateMethod($validatorMock, 'isNumberNegative');
         
-        // act
         $result = $isNumberNegativeMethod->invokeArgs($validatorMock, [-10]);
 
-        // assert
         $this->assertTrue($result);
     }
 
-    public function testIsNumberNegativeMustReturnFalse() {
-        // arrange
+    public function testIsNumberNegativeMustReturnFalse()
+    {
         $validatorMock = $this->getMockForAbstractClass(Validator::class);
         $isNumberNegativeMethod = self::getPrivateMethod($validatorMock, 'isNumberNegative');
         
-        // act
         $result = $isNumberNegativeMethod->invokeArgs($validatorMock, [10]);
 
-        // assert
         $this->assertFalse($result);
     }
 
-    public function testSanitizeDataMustReturnModifiedHtml() {
-        // arrange
+    public function testSanitizeDataMustReturnModifiedHtml()
+    {
         $validatorMock = $this->getMockForAbstractClass(Validator::class);
         $sanitizeDataMethod = self::getPrivateMethod($validatorMock, 'sanitizeData');
 
-        // act
         $result = $sanitizeDataMethod->invokeArgs($validatorMock, [' fsad<html> ']);
 
-        // assert
         $this->assertSame('fsad&lt;html&gt;', $result);
     }
 
@@ -54,7 +48,7 @@ class ValidatorTest extends TestCase
     protected static function getPrivateMethod(
         object $className,
         string $methodName
-    ) : ReflectionMethod
+    ): ReflectionMethod
     {
         $class = new ReflectionClass($className::class);
         $method = $class->getMethod($methodName);
