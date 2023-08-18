@@ -17,7 +17,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function theNameCharactersShoulbBeValid()
+    public function theNameCharactersShouldBeValid()
     {
         $name = "fffff";
         $invalidNameError = "Apenas letras e espaços em branco!";
@@ -33,7 +33,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function theNameCharactersShoulbBeInvalid()
+    public function theNameCharactersShouldBeInvalid()
     {
         $name = "fffff0";
         $invalidNameError = "Apenas letras e espaços em branco!";
@@ -49,7 +49,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function numberShouldBeValidIfNumericStringIsPassed()
+    public function numberShouldBeValidIfNumericStringIsPassed()
     {
         $number = "55";
         $error = "Apenas números!";
@@ -65,7 +65,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function numberShouldBeValidIfIntegerIsPassed()
+    public function numberShouldBeValidIfIntegerIsPassed()
     {
         $number = 55;
         $error = "Apenas números!";
@@ -81,7 +81,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function numberShouldBeInvalid()
+    public function numberShouldBeInvalid()
     {
         $number = "55f";
         $error = "Apenas números!";
@@ -97,7 +97,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function numberShouldNotBeNegative()
+    public function numberShouldNotBeNegative()
     {
         $number = -55;
         $error = '';
@@ -115,7 +115,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function theEmailShouldBeValid()
+    public function theEmailShouldBeValid()
     {
         $email = "felizardo@gmail.com";
         $error = "Formato inválido de email!";
@@ -131,7 +131,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function theEmailShouldBeInvalid()
+    public function theEmailShouldBeInvalid()
     {
         $email = "felizardo@gmail";
         $error = "Formato inválido de email!";
@@ -147,7 +147,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function theUrlShouldBeValid()
+    public function theUrlShouldBeValid()
     {
         $url = "https://www.felizardo.com";
         $invalidemailError = "Formato inválido de url!";
@@ -163,7 +163,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function theUrlShouldBeInvalid()
+    public function theUrlShouldBeInvalid()
     {
         $url = "felizardo.com";
         $error = "Formato inválido de url!";
@@ -179,7 +179,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function emptyDataShouldReturnArrayIfGivenDataIsEmpty()
+    public function emptyDataShouldReturnArrayIfGivenDataIsEmpty()
     {
         $emptyData = $this->nonRequiredData->validateEmptyData('', 'name');
         
@@ -192,7 +192,7 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
-    function emptyDataShouldReturnFalseIfGivenDataIsNotEmpty()
+    public function emptyDataShouldReturnFalseIfGivenDataIsNotEmpty()
     {
         $result = $this->nonRequiredData->validateEmptyData('f', 'name');
         $this->assertFalse($result);
