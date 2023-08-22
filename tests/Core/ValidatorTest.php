@@ -1,15 +1,17 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use Radar\Core\DataLimiter;
 use Radar\Core\Validator;
 
-require "../../vendor/autoload.php";
+require __DIR__ . "/../../vendor/autoload.php";
 
 class ValidatorTest extends TestCase
 {
-    public function testIsNumberNegativeMustReturnTrue()
+    /** @test */
+    public function itShouldReturnTrueIfTheNumberIsNegative()
     {
-        $validatorMock = $this->getMockForAbstractClass(Validator::class);
+        $validatorMock = $this->getMockForAbstractClass(Validator::class, [new DataLimiter]);
         $isNumberNegativeMethod = self::getPrivateMethod($validatorMock, 'isNumberNegative');
         
         $result = $isNumberNegativeMethod->invokeArgs($validatorMock, [-10]);
@@ -17,9 +19,10 @@ class ValidatorTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testIsNumberNegativeMustReturnFalse()
+    /** @test */
+    public function itShouldReturnFalseIfTheNumberIsPositive()
     {
-        $validatorMock = $this->getMockForAbstractClass(Validator::class);
+        $validatorMock = $this->getMockForAbstractClass(Validator::class, [new DataLimiter]);
         $isNumberNegativeMethod = self::getPrivateMethod($validatorMock, 'isNumberNegative');
         
         $result = $isNumberNegativeMethod->invokeArgs($validatorMock, [10]);
@@ -29,7 +32,7 @@ class ValidatorTest extends TestCase
 
     public function testSanitizeDataMustReturnModifiedHtml()
     {
-        $validatorMock = $this->getMockForAbstractClass(Validator::class);
+        $validatorMock = $this->getMockForAbstractClass(Validator::class, [new DataLimiter]);
         $sanitizeDataMethod = self::getPrivateMethod($validatorMock, 'sanitizeData');
 
         $result = $sanitizeDataMethod->invokeArgs($validatorMock, [' fsad<html> ']);
