@@ -5,6 +5,7 @@ namespace Radar\Validators;
 use function is_array;
 use Radar\Core\DataFilter;
 use Radar\Core\DataFiltersMap;
+use Radar\Core\DataPattern;
 use Radar\Core\Validator;
 use Radar\Validatable;
 
@@ -126,19 +127,15 @@ final class NonRequiredData extends Validator implements Validatable
      * @param string $chars caracteres a serem validados
      * @param string $error erro caso os caracteres sejam inválidos
     */
-    public function validateString(int|string $chars): array
+    public function validateString(int|string $chars, DataPattern $pattern, string $error): array
     {
-        $emptyValidatedData = $this->validateEmptyData($chars, "chars");
+        $dataType = 'chars';
 
-        if (is_array($emptyValidatedData)) {
-            return $emptyValidatedData;
-        }
-
-        $sanitizedString = $this->sanitizeData($chars);
-        $this->filterSanitizedText($sanitizedString);
+        $sanitizedString = $this->validateWithoutFilter($chars, $error, $dataType);
+        $this->filterSanitizedText($sanitizedString, $pattern);
 
         $data = [
-            "chars" => (string) $this->validData,
+            $dataType => (string) $this->validData,
             "error" => $this->invalidDataError
         ];
         

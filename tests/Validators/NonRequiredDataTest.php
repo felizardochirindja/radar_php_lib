@@ -5,6 +5,7 @@ require  __DIR__ . "/../../vendor/autoload.php";
 use Radar\Validators\NonRequiredData;
 use PHPUnit\Framework\TestCase;
 use Radar\Core\DataLimiter;
+use Radar\Core\DataPattern;
 
 class NonRequiredDataTest extends TestCase
 {
@@ -202,9 +203,8 @@ class NonRequiredDataTest extends TestCase
     public function stringShouldMatchTheGivenPatern()
     {
         $pattern = new DataPattern(2, 2, 1);
-        $pattern->acceptedSpecialChars = '%#&';
         
-        $result = $this->nonRequiredData->validateString('aA#1', 'string doesnt match the pattern', $pattern);
+        $result = $this->nonRequiredData->validateString('aA#1', $pattern, 'string doesnt match the pattern');
 
         $expectedData = [
             'chars' => 'aA#1',
@@ -212,5 +212,17 @@ class NonRequiredDataTest extends TestCase
         ];
 
         $this->assertSame($expectedData, $result);
+    }
+
+    /** @test */
+    public function itShouldThrowExceptionIfPatternDataQuantityIsDiferentToStringDelimitation()
+    {
+        $pattern = new DataPattern(2, 1, 1);
+        
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('pattern data quantity must not be greater to string delimitation');
+
+        $this->nonRequiredData->setLength(3, '');
+        $this->nonRequiredData->validateString('aA#1', $pattern, 'string doesnt match the pattern');
     }
 }

@@ -8,6 +8,8 @@ use function filter_var;
 use function trim;
 use function stripslashes;
 use function htmlspecialchars;
+
+use Exception;
 use InvalidArgumentException;
 use Radar\Core\DataLimiter;
 
@@ -88,8 +90,12 @@ abstract class Validator
         return ($number < 0);
     }
     
-    protected function filterSanitizedText(string|int $text): void
+    protected function filterSanitizedText(string|int $text, DataPattern $pattern): void
     {
+        if ($pattern->getDataQuantity() > $this->dataLimiter->getCharsNumber()) {
+            throw new Exception('pattern data quantity must not be greater to string delimitation');
+        }
+
         if (!$this->isDataDelimitationValid($text)) {
             return;
         }

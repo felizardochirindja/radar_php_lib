@@ -26,7 +26,7 @@ final class DataLimiter
     public function setDefaultConfiguration(): void
     {
         $this->minChars = 1;
-        $this->maxChars = 50;
+        $this->maxChars = $this->charsNumber = 50;
         $this->useDelimitation = true;
     }
 
@@ -107,6 +107,7 @@ final class DataLimiter
 
         $this->minChars = $minChars;
         $this->maxChars = $maxChars;
+        $this->charsNumber = $maxChars;
         $this->error = $error;
     }
 
@@ -127,5 +128,10 @@ final class DataLimiter
         $this->useDelimitation = false;
         $this->charsNumber = $lenght;
         $this->error = $error;
+    }
+
+    public function getCharsNumber(): int
+    {
+        return $this->charsNumber;
     }
 }
