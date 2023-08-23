@@ -3,6 +3,8 @@
 namespace Radar\Validators;
 
 use function is_array;
+use Radar\Core\DataFilter;
+use Radar\Core\DataFiltersMap;
 use Radar\Core\Validator;
 use Radar\Validatable;
 
@@ -70,7 +72,7 @@ final class NonRequiredData extends Validator implements Validatable
     */
     public function validateEmail(string $email, string $error): array
     {
-        return $this->validateUsingFilters($email, $error, 'email', FILTER_VALIDATE_EMAIL);
+        return $this->validateUsingFilters($email, $error, 'email', DataFilter::Email);
     }
 
     /**
@@ -81,7 +83,7 @@ final class NonRequiredData extends Validator implements Validatable
     */
     public function validateURL(string $url, string $error): array
     {
-        return $this->validateUsingFilters($url, $error, 'url', FILTER_VALIDATE_URL);
+        return $this->validateUsingFilters($url, $error, 'url', DataFilter::Url);
     }
 
     private function validateWithoutFilter(string $data, string $error, string $dataType): string|int|array
@@ -97,7 +99,7 @@ final class NonRequiredData extends Validator implements Validatable
         return $this->sanitizeData($data);
     }
 
-    private function validateUsingFilters(string $data, string $error, string $dataType, $filter): array
+    private function validateUsingFilters(string $data, string $error, string $dataType, int $filter): array
     {
         $sanitizedData = $this->validateWithoutFilter($data, $error, $dataType);
 
@@ -105,7 +107,7 @@ final class NonRequiredData extends Validator implements Validatable
             return $sanitizedData;
         }
 
-        $this->filterDataByFilters($sanitizedData, $filter);
+        $this->filterDataByFilters($sanitizedData, DataFiltersMap::Map[$filter]);
         
         $data = [
             $dataType => (string) $this->validData,
