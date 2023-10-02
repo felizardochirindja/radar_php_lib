@@ -3,6 +3,8 @@
 namespace Radar\Validators;
 
 use function is_array;
+
+use Radar\Core\DataLimiter;
 use Radar\Core\Validator;
 use Radar\Validatable;
 
@@ -12,10 +14,9 @@ final class RequiredData extends Validator implements Validatable
 {
     private string $requiredDataError;
 
-    public function __construct(
-        private string $genericDataError
-    ) {
-        parent::__construct();
+    public function __construct(private string $genericDataError, DataLimiter $dataLimiter)
+    {
+        parent::__construct($dataLimiter);
     }
 
     /**
@@ -186,16 +187,14 @@ final class RequiredData extends Validator implements Validatable
      * 
      * @return array|false
     */
-    protected function validateEmptyData(
-        int | string $givenData, 
-        string $dataType) : array | false
+    protected function validateEmptyData(int|string $givenData, string $dataType): array|false
     {
         if (empty($givenData)) {
             $this->setRequiredDataError();
 
             $data = [
                 $dataType => "",
-                "error"   => $this->requiredDataError
+                "error" => $this->requiredDataError
             ];
 
             return $data;
