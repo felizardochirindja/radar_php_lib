@@ -12,8 +12,8 @@
         }
     ],
     "scripts": {
-        "test_validators": "php ./vendor/bin/phpunit ./tests/Validators/ --colors=always --testdox",
-        "test_core": "php ./vendor/bin/phpunit ./tests/Core/ --colors=always --testdox"
+        "test-validators": "php81 ./vendor/bin/phpunit ./tests/Validators/ --colors=always --testdox",
+        "test-core": "php81 ./vendor/bin/phpunit ./tests/Core/ --colors=always --testdox"
     },
     "autoload": {
         "psr-4": {
