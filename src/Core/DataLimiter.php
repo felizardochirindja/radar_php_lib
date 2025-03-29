@@ -14,6 +14,9 @@ final class DataLimiter
     private int $charsNumber;
     private int $minChars;
     private int $maxChars;
+
+    private const DEFAULT_MIN_CHARS = 1;
+    private const DEFAULT_MAX_CHARS = 50;
     
     public string $error;
 
@@ -28,8 +31,8 @@ final class DataLimiter
     */
     public function setDefaultConfiguration(): void
     {
-        $this->minChars = 1;
-        $this->maxChars = $this->charsNumber = 50;
+        $this->minChars = self::DEFAULT_MIN_CHARS;
+        $this->maxChars = $this->charsNumber = self::DEFAULT_MAX_CHARS;
         $this->useDelimitation = true;
     }
 
@@ -66,7 +69,7 @@ final class DataLimiter
     }
     
     /**
-     * verity if the given string has the mininum characters wanted
+     * verify if the given string has the mininum characters wanted
      * 
      * @param string $data the string to be verified
     */
@@ -76,7 +79,7 @@ final class DataLimiter
     }
 
     /**
-     * verity if the given string has the more than maximum characters wanted
+     * verify if the given string has the more than maximum characters wanted
      * 
      * @param string $data the string to be verified
     */
