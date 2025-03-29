@@ -1,7 +1,7 @@
 {
     "name": "felizardochirindja/radar",
     "type": "library",
-    "description": "bilbioteca para validar formularios",
+    "description": "Valida os seus dados de forma simpes",
     "version": "1.0.1",
     "minimum-stability": "stable",
     "license": "MIT",
