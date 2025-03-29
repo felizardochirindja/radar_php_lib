@@ -4,9 +4,12 @@ namespace Radar\Validators;
 
 use function is_array;
 
+use Radar\Core\DataFilter;
 use Radar\Core\DataLimiter;
+use Radar\Core\DataPattern;
 use Radar\Core\Validator;
 use Radar\Validatable;
+use Radar\Validators\DataType;
 
 require __DIR__. "/../../vendor/autoload.php";
 
@@ -29,7 +32,7 @@ final class RequiredData extends Validator implements Validatable
     */
     public function validateName(string $name, string $error) : array
     {
-        $arrayWithEmptyDataError = $this->validateEmptyData($name, "name");
+        $arrayWithEmptyDataError = $this->validateEmptyData($name, DataType::NAME);
 
         if (is_array($arrayWithEmptyDataError)) {
             return $arrayWithEmptyDataError;
@@ -61,7 +64,7 @@ final class RequiredData extends Validator implements Validatable
     */
     public function validateNumber(int | string $number, string $error) : array
     {
-        $arrayWithEmptyDataError = $this->validateEmptyData($number, "number");
+        $arrayWithEmptyDataError = $this->validateEmptyData($number, DataType::NUM);
 
         if (is_array($arrayWithEmptyDataError)) {
             return $arrayWithEmptyDataError;
@@ -93,7 +96,7 @@ final class RequiredData extends Validator implements Validatable
     */
     public function validateEmail(string $email, string $error) : array
     {
-        $arrayWithEmptyDataError = $this->validateEmptyData($email, "email");
+        $arrayWithEmptyDataError = $this->validateEmptyData($email, DataType::EMAIL);
 
         if (is_array($arrayWithEmptyDataError)) {
             return $arrayWithEmptyDataError;
@@ -102,7 +105,7 @@ final class RequiredData extends Validator implements Validatable
         $this->genericError = $error;
 
         $sanitizedEmail = $this->sanitizeData($email);
-        $this->filterDataByFilters($sanitizedEmail, FILTER_VALIDATE_EMAIL);
+        $this->filterDataByFilters($sanitizedEmail, DataFilter::Email);
 
         $emailData = [
             "email"  => (string) $this->validData,
@@ -125,7 +128,7 @@ final class RequiredData extends Validator implements Validatable
     */
     public function validateURL(string $url, string $error) : array
     {
-        $arrayWithEmptyDataError = $this->validateEmptyData($url, "URL");
+        $arrayWithEmptyDataError = $this->validateEmptyData($url, DataType::URL);
 
         if (is_array($arrayWithEmptyDataError)) {
             return $arrayWithEmptyDataError;
@@ -134,7 +137,7 @@ final class RequiredData extends Validator implements Validatable
         $this->genericError = $error;
 
         $sanitizedUrl = $this->sanitizeData($url);
-        $this->filterDataByFilters($sanitizedUrl, FILTER_VALIDATE_URL);
+        $this->filterDataByFilters($sanitizedUrl, DataFilter::Url);
 
         $urlData = [
             "url"   => (string) $this->validData,
@@ -156,16 +159,18 @@ final class RequiredData extends Validator implements Validatable
      * 
      * @return array
     */
-    public function validateString(int | string $chars) : array
+    public function validateString(int|string $chars, DataPattern $dataPattern, string $error): array
     {
-        $arrayWithEmptyDataError = $this->validateEmptyData($chars, "chars");
-
+        $arrayWithEmptyDataError = $this->validateEmptyData($chars, DataType::CHARS);
+        
         if (is_array($arrayWithEmptyDataError)) {
             return $arrayWithEmptyDataError;
         }
 
+        $this->genericError = $error;
+
         $sanitizedString = $this->sanitizeData($chars);
-        $this->filterSanitizedText($sanitizedString);
+        $this->filterSanitizedText($sanitizedString, $dataPattern);
 
         $data = [
             "chars" => (string) $this->validData,
@@ -187,16 +192,14 @@ final class RequiredData extends Validator implements Validatable
      * 
      * @return array|false
     */
-    protected function validateEmptyData(int|string $givenData, string $dataType): array|false
+    protected function validateEmptyData(int|string $givenData, DataType $dataType): array|bool
     {
         if (empty($givenData)) {
             $this->setRequiredDataError();
-
             $data = [
                 $dataType => "",
                 "error" => $this->requiredDataError
             ];
-
             return $data;
         }
         

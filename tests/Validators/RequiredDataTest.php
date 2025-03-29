@@ -4,8 +4,10 @@ require __DIR__ . "/../../vendor/autoload.php";
 
 use Radar\Validators\RequiredData;
 use PHPUnit\Framework\TestCase;
+use Radar\Core\DataLimiter;
+use Radar\Core\DataPattern;
 
-class RequiredDataTest extends TestCase
+class RequiredDatar extends TestCase
 {
     private RequiredData $requiredData;
     private const REQUIRED_DATA_ERROR = "Campo obrigratório!";
@@ -13,25 +15,18 @@ class RequiredDataTest extends TestCase
     public function __construct()
     {
         parent::__construct();
-        $this->requiredData = new RequiredData(self::REQUIRED_DATA_ERROR);
+        $this->requiredData = new RequiredData(self::REQUIRED_DATA_ERROR, new DataLimiter);
     }
-
-    /**
-     * name tests
-     **/
 
     public function testValidNameChars()
     {
-        // arrange
         $name = "fefef";
         $invalidNameError = "Apenas letras e espaços em branco!";
 
-        // act
         $nameData = $this->requiredData->validateName($name, $invalidNameError);
 
-        // assert
         $expectedContent = array(
-            "name"  => $name,
+            "name" => $name,
             "error" => ""
         );
 
@@ -40,16 +35,13 @@ class RequiredDataTest extends TestCase
 
     public function testInvalidNameChars()
     {
-        // arrange
         $name = "ffe5";
         $invalidCharsError = "Apenas letras";
 
-        // act
         $nameData = $this->requiredData->validateName($name, $invalidCharsError);
 
-        // assert
         $expetedNameData = [
-            'name'  => '',
+            'name' => '',
             'error' => $invalidCharsError
         ];
 
@@ -58,18 +50,15 @@ class RequiredDataTest extends TestCase
 
     public function testValidNameLength()
     {
-        // arrange
         $name = 'felizard';
         $invalidCharsError = "Apenas letras";
         $invalidLengthError = 'Numero invalido de characteres';
 
-        // act
         $this->requiredData->setLength(8, $invalidLengthError);
         $nameData = $this->requiredData->validateName($name, $invalidCharsError);
 
-        // assert
         $expectedNameData = [
-            'name'  => $name,
+            'name' => $name,
             'error' => ''
         ];
 
@@ -78,18 +67,15 @@ class RequiredDataTest extends TestCase
 
     public function testInvalidNameLength()
     {
-        // arrange
         $name = 'felizard';
         $invalidCharsError = "Apenas letras";
         $invalidLengthError = 'Numero invalido de characteres';
 
-        // act
         $this->requiredData->setLength(5, $invalidLengthError);
         $nameData = $this->requiredData->validateName($name, $invalidCharsError);
 
-        // assert
         $expectedNameData = [
-            'name'  => '',
+            'name' => '',
             'error' => $invalidLengthError
         ];
 
@@ -98,18 +84,15 @@ class RequiredDataTest extends TestCase
     
     public function testValidNameDelimitation()
     {
-        // arrange
         $name = 'feliz';
         $invalidCharsError = "Apenas letras e espacos em branco";
         $delimitationError = 'caracteres de 4 a 8';
 
-        // act
         $this->requiredData->setDelimitation(4, 8, $delimitationError);
         $nameData = $this->requiredData->validateName($name, $invalidCharsError);
 
-        // assert
         $expectedNameData = [
-            'name'  => $name,
+            'name' => $name,
             'error' => ''
         ];
 
@@ -118,18 +101,15 @@ class RequiredDataTest extends TestCase
 
     public function testInvalidNameDelimitation()
     {
-        // arrange
         $name = 'felizardo';
         $invalidCharsError = "Apenas letras e espacos em branco";
         $delimitationError = 'caracteres de 4 a 8';
 
-        // act
         $this->requiredData->setDelimitation(4, 7, $delimitationError);
         $nameData = $this->requiredData->validateName($name, $invalidCharsError);
 
-        // assert
         $expectedNameData = [
-            'name'  => '',
+            'name' => '',
             'error' => $delimitationError
         ];
 
@@ -138,18 +118,13 @@ class RequiredDataTest extends TestCase
 
     public function testValidaNumber()
     {
-        // arrange
         $number = 44444;
         $invalidNumberError = "Apenas números!";
-        $invalidLengthError = "Digite apenas 5 caracteres!";
         $limitCharsError = "Digite de 5 a 10 caracteres apenas!";
-        // $requiredNumberError = "O número é obrigatório!";
 
-        // act
         $this->requiredData->setDelimitation(5, 10, $limitCharsError);
         $numberData = $this->requiredData->validateNumber($number, $invalidNumberError);
 
-        // assert
         $expectedContent = array(
             "number" => $number,
             "error"  => ""
@@ -160,14 +135,11 @@ class RequiredDataTest extends TestCase
 
     public function testValidEmail()
     {
-        // arrange
         $email = "felizardo@gmail.com";
         $invalidEmailError = "Formato inválido de email!";
 
-        // act
         $emailData = $this->requiredData->validateEmail($email, $invalidEmailError);
 
-        // assert
         $expectedContent = array(
             "email" => $email,
             "error" => ""
@@ -178,14 +150,11 @@ class RequiredDataTest extends TestCase
 
     public function testInvalidEmail()
     {
-        // arrange
         $email = "felizardo.com";
         $invalidEmailError = "Formato inválido de email!";
 
-        // act
         $emailData = $this->requiredData->validateEmail($email, $invalidEmailError);
 
-        // assert
         $expectedContent = array(
             "email" => '',
             "error" => $invalidEmailError,
@@ -194,36 +163,30 @@ class RequiredDataTest extends TestCase
         $this->assertSame($expectedContent, $emailData);
     }
 
-    public function testValidURL()
+    public function testValidUrl()
     {
-        // arrange
         $url = "http://www.felizardo.com";
         $invalidemailError = "Formato inválido de url!";
 
-        // act
         $urlData = $this->requiredData->validateUrl($url, $invalidemailError);
 
-        // assert
         $expectedContent = array(
-            "url"   => $url,
+            "url" => $url,
             "error" => ""
         );
 
         $this->assertSame($expectedContent, $urlData) ;
     }
 
-    public function testInvalidURL()
+    public function testInvalidUrl()
     {
-        // arrange
         $url = "://ww.felizardo";
         $invalidEmailError = "Formato inválido de url!";
 
-        // act
         $urlData = $this->requiredData->validateUrl($url, $invalidEmailError);
 
-        // assert
         $expectedContent = array(
-            'url'   => '',
+            'url' => '',
             'error' => $invalidEmailError,
         );
 
@@ -232,16 +195,12 @@ class RequiredDataTest extends TestCase
 
     public function testValidateString()
     {
-        // arrange
         $string = "abcd123=";
-        // $invalidLengthError = "Digite apenas 4 caracteres!";
-        // $limitCharsError = "Digite de 5 a 10 caracteres apenas!";
-        // $requiredStringError = "A string é obrigatória!";
+        $pattern = new DataPattern(1, 0, 0);
+        $error = "Invalid string format";
 
-        // act
-        $stringData = $this->requiredData->validatestring($string);
+        $stringData = $this->requiredData->validateString($string, $pattern, $error);
 
-        // assert
         $expectedContent = array(
             "chars" => $string,
             "error" => ""
