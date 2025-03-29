@@ -35,6 +35,23 @@ class NonRequiredDataTest extends TestCase
     }
 
     /** @test */
+    public function theNameShouldBeEmptyIfNotProvided()
+    {
+        $name = "";
+        $invalidNameError = "Apenas letras e espaços em branco!";
+
+        $nameData = $this->nonRequiredData->validateName($name, $invalidNameError);
+
+        $expectedContent = [
+            "name" => '',
+            "error" => '',
+        ];
+
+        $this->assertSame($expectedContent, $nameData);
+    }
+
+
+    /** @test */
     public function theNameCharactersShouldBeInvalid()
     {
         $name = "fffff0";
@@ -55,7 +72,7 @@ class NonRequiredDataTest extends TestCase
     {
         $number = "55";
         $error = "Apenas números!";
-        
+
         $numberData = $this->nonRequiredData->validateNumber($number, $error);
 
         $expectedData = [
@@ -71,7 +88,7 @@ class NonRequiredDataTest extends TestCase
     {
         $number = 55;
         $error = "Apenas números!";
-        
+
         $numberData = $this->nonRequiredData->validateNumber($number, $error);
 
         $expectedData = [
@@ -87,7 +104,7 @@ class NonRequiredDataTest extends TestCase
     {
         $number = "55f";
         $error = "Apenas números!";
-        
+
         $numberData = $this->nonRequiredData->validateNumber($number, $error);
 
         $expectedData = [
@@ -184,7 +201,7 @@ class NonRequiredDataTest extends TestCase
     public function emptyDataShouldReturnArrayIfGivenDataIsEmpty()
     {
         $emptyData = $this->nonRequiredData->validateEmptyData('', DataType::NAME);
-        
+
         $expectedData = [
             'name' => '',
             'error' => '',
@@ -204,7 +221,7 @@ class NonRequiredDataTest extends TestCase
     public function stringShouldMatchTheGivenPatern()
     {
         $pattern = new DataPattern(2, 2, 1);
-        
+
         $result = $this->nonRequiredData->validateString('aA#1', $pattern, 'string doesnt match the pattern');
 
         $expectedData = [
@@ -219,11 +236,109 @@ class NonRequiredDataTest extends TestCase
     public function itShouldThrowExceptionIfPatternDataQuantityIsDiferentToStringDelimitation()
     {
         $pattern = new DataPattern(2, 1, 1);
-        
+
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('pattern data quantity must not be greater to string delimitation');
 
         $this->nonRequiredData->setLength(3, '');
         $this->nonRequiredData->validateString('aA#1', $pattern, 'string doesnt match the pattern');
+    }
+
+    /** @test */
+    public function theNumberShouldBeNullIfNotProvided()
+    {
+        $number = '';
+        $error = "Apenas números!";
+
+        $numberData = $this->nonRequiredData->validateNumber($number, $error);
+
+        $expectedData = [
+            'number' => '',
+            'error' => '',
+        ];
+
+        $this->assertSame($expectedData, $numberData);
+    }
+
+    /** @test */
+    public function theEmailShouldBeEmptyIfNotProvided()
+    {
+        $email = "";
+        $error = "Formato inválido de email!";
+
+        $emailData = $this->nonRequiredData->validateEmail($email, $error);
+
+        $expectedContent = [
+            "email" => '',
+            "error" => '',
+        ];
+
+        $this->assertSame($expectedContent, $emailData);
+    }
+
+    /** @test */
+    public function theUrlShouldBeEmptyIfNotProvided()
+    {
+        $url = "";
+        $error = "Formato inválido de url!";
+
+        $urlData = $this->nonRequiredData->validateUrl($url, $error);
+
+        $expectedContent = [
+            "url" => '',
+            "error" => '',
+        ];
+
+        $this->assertSame($expectedContent, $urlData);
+    }
+
+    /** @test */
+    public function theStringShouldBeEmptyIfNotProvided()
+    {
+        $string = "";
+        $pattern = new DataPattern(2, 2, 1);
+        $errorMessage = 'string doesnt match the pattern';
+
+        $result = $this->nonRequiredData->validateString($string, $pattern, $errorMessage);
+
+        $expectedData = [
+            'chars' => '',
+            'error' => '',
+        ];
+
+        $this->assertSame($expectedData, $result);
+    }
+
+    /** @skip */
+    public function numberShouldBeValidIfFloatingPointIsPassed()
+    {
+        $number = "55.5";
+        $error = "Apenas números!";
+
+        $numberData = $this->nonRequiredData->validateNumber($number, $error);
+
+        $expectedData = [
+            'number' => 55.5,
+            'error' => ""
+        ];
+
+        $this->assertSame($expectedData, $numberData);
+    }
+
+    /** @test */
+    public function theStringShouldAllowSpecialCharacters()
+    {
+        $string = "aA#1!";
+        $pattern = new DataPattern(2, 2, 1);
+        $errorMessage = 'string doesnt match the pattern';
+
+        $result = $this->nonRequiredData->validateString($string, $pattern, $errorMessage);
+
+        $expectedData = [
+            'chars' => 'aA#1!',
+            'error' => '',
+        ];
+
+        $this->assertSame($expectedData, $result);
     }
 }
