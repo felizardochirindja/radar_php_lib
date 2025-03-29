@@ -48,7 +48,7 @@ class DataLimiterTest extends TestCase
         $maxCharsProperty->setValue($dataLimiter, 5);
 
         $isProperlyLimited = $dataLimiter->isProperlyLimited($data);
-        
+
         $dataLimiter->setDelimitation(2, 5, '');
 
         $this->assertTrue($isProperlyLimited);
@@ -62,7 +62,7 @@ class DataLimiterTest extends TestCase
         $minChars = 2;
         $maxChars = 4;
         $error = 'Digite entre 2 a 4 caracteres!';
-        
+
         $dataLimiter->setDelimitation($minChars, $maxChars, $error);
 
         $minCharsProperty = $reflectionClass->getProperty('minChars');

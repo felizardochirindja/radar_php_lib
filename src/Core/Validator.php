@@ -18,7 +18,7 @@ abstract class Validator
 {
     protected int|string $validData;
     private bool $allowNegativeNumber;
-    
+
     protected string $invalidDataError;
     private string $negativeNumberError;
     protected string $genericError;
@@ -37,7 +37,7 @@ abstract class Validator
         if (!$this->isDataDelimitationValid($name)) {
             return;
         }
-            
+
         $this->filterName($name);
         $this->dataLimiter->setDefaultConfiguration();
     }
@@ -47,29 +47,29 @@ abstract class Validator
         if (!preg_match("/^[a-zA-Z áàãéèíìóòõúùç]*$/", $name)) {
             $this->invalidDataError = $this->genericError;
             return;
-        } 
-        
+        }
+
         $this->validData = $name;
     }
-    
+
     protected function filterSanitizedNumber(int|string $number): void
     {
         if (!$this->isDataDelimitationValid($number)) {
             return;
         }
-        
+
         $this->filterNumber($number);
         $this->dataLimiter->setDefaultConfiguration();
     }
-    
+
     private function filterNumber(int|string $number): void
     {
         if (!is_numeric($number)) {
             $this->invalidDataError = $this->genericError;
             $this->allowNegativeNumber = true;
             return;
-        }  
-         
+        }
+
         if (!($this->allowNegativeNumber || !$this->isNumberNegative($number))) {
             $this->invalidDataError = $this->negativeNumberError;
             return;
@@ -78,7 +78,7 @@ abstract class Validator
         $this->validData = $number;
         $this->allowNegativeNumber = true;
     }
-    
+
     /** esta funcao deve ser chamada antes de validar um numero. ela garente que o numero nao seja negativo */
     public function denyNegativeNumber(string $error): void
     {
@@ -90,7 +90,7 @@ abstract class Validator
     {
         return ($number < 0);
     }
-    
+
     protected function filterSanitizedText(string|int $text, DataPattern $pattern): void
     {
         if ($pattern->getDataQuantity() > $this->dataLimiter->getCharsNumber()) {
@@ -109,14 +109,14 @@ abstract class Validator
      * filtra o dado usando os filtros nativos do php
      * 
      * @throws InvalidArgumentException if the filter is invalid
-    */
+     */
     protected function filterDataByFilters(string $data, DataFilter $filter): void
     {
         if (!filter_var($data, $filter->value)) {
             $this->invalidDataError = $this->genericError;
             return;
         }
-        
+
         $this->validData = $data;
     }
 
@@ -149,7 +149,7 @@ abstract class Validator
      * @param int $minChars numero mínimo de caracteres ou dígitos
      * @param int $maxChars número máximo de caracteres ou dígitos
      * @param string $error mensagem de erro caso o dado não obedeça a delimitacao
-    */
+     */
     public function setDelimitation(int $minChars, int $maxChars, string $error): void
     {
         $this->dataLimiter->setDelimitation($minChars, $maxChars, $error);

@@ -14,7 +14,7 @@ class ValidatorTest extends TestCase
     {
         $validatorMock = $this->getMockForAbstractClass(Validator::class, [new DataLimiter]);
         $isNumberNegativeMethod = self::getPrivateMethod($validatorMock, 'isNumberNegative');
-        
+
         $result = $isNumberNegativeMethod->invokeArgs($validatorMock, [-10]);
 
         $this->assertTrue($result);
@@ -25,7 +25,7 @@ class ValidatorTest extends TestCase
     {
         $validatorMock = $this->getMockForAbstractClass(Validator::class, [new DataLimiter]);
         $isNumberNegativeMethod = self::getPrivateMethod($validatorMock, 'isNumberNegative');
-        
+
         $result = $isNumberNegativeMethod->invokeArgs($validatorMock, [10]);
 
         $this->assertFalse($result);
@@ -69,7 +69,7 @@ class ValidatorTest extends TestCase
      * @param $param string $methodName method to get
      * 
      * @return ReflectionMethod
-    */
+     */
     protected static function getPrivateMethod(object $className, string $methodName): ReflectionMethod
     {
         $class = new ReflectionClass($className::class);

@@ -11,7 +11,7 @@ use Radar\Core\Validator;
 use Radar\Validatable;
 use Radar\Validators\DataType;
 
-require __DIR__. "/../../vendor/autoload.php";
+require __DIR__ . "/../../vendor/autoload.php";
 
 final class RequiredData extends Validator implements Validatable
 {
@@ -29,8 +29,8 @@ final class RequiredData extends Validator implements Validatable
      * @param string $error erro caso o nome seja inválido
      * 
      * @return array
-    */
-    public function validateName(string $name, string $error) : array
+     */
+    public function validateName(string $name, string $error): array
     {
         $arrayWithEmptyDataError = $this->validateEmptyData($name, DataType::NAME);
 
@@ -47,13 +47,13 @@ final class RequiredData extends Validator implements Validatable
             "name"  => (string) $this->validData,
             "error" => $this->invalidDataError
         ];
-        
+
         $this->emptyError();
         $this->removeRequiredDataError();
 
         return $nameData;
     }
-    
+
     /**
      * valida um número
      * 
@@ -61,8 +61,8 @@ final class RequiredData extends Validator implements Validatable
      * @param string $error erro caso o número seja inválido
      * 
      * @return array
-    */
-    public function validateNumber(int | string $number, string $error) : array
+     */
+    public function validateNumber(int | string $number, string $error): array
     {
         $arrayWithEmptyDataError = $this->validateEmptyData($number, DataType::NUM);
 
@@ -79,7 +79,7 @@ final class RequiredData extends Validator implements Validatable
             "number" => (int) $this->validData,
             "error"  => $this->invalidDataError
         ];
-        
+
         $this->emptyError();
         $this->removeRequiredDataError();
 
@@ -93,8 +93,8 @@ final class RequiredData extends Validator implements Validatable
      * @param string $error erro caso o email seja inválido
      * 
      * @param array
-    */
-    public function validateEmail(string $email, string $error) : array
+     */
+    public function validateEmail(string $email, string $error): array
     {
         $arrayWithEmptyDataError = $this->validateEmptyData($email, DataType::EMAIL);
 
@@ -111,7 +111,7 @@ final class RequiredData extends Validator implements Validatable
             "email"  => (string) $this->validData,
             "error"  => $this->invalidDataError
         ];
-        
+
         $this->emptyError();
         $this->removeRequiredDataError();
 
@@ -125,8 +125,8 @@ final class RequiredData extends Validator implements Validatable
      * @param string $error erro caso a url seja inválida
      * 
      * @return array
-    */
-    public function validateURL(string $url, string $error) : array
+     */
+    public function validateURL(string $url, string $error): array
     {
         $arrayWithEmptyDataError = $this->validateEmptyData($url, DataType::URL);
 
@@ -143,7 +143,7 @@ final class RequiredData extends Validator implements Validatable
             "url"   => (string) $this->validData,
             "error" => $this->invalidDataError
         ];
-        
+
         $this->emptyError();
         $this->removeRequiredDataError();
 
@@ -158,11 +158,11 @@ final class RequiredData extends Validator implements Validatable
      * @param string $error erro caso os caracteres sejam inválidos
      * 
      * @return array
-    */
+     */
     public function validateString(int|string $chars, DataPattern $dataPattern, string $error): array
     {
         $arrayWithEmptyDataError = $this->validateEmptyData($chars, DataType::CHARS);
-        
+
         if (is_array($arrayWithEmptyDataError)) {
             return $arrayWithEmptyDataError;
         }
@@ -176,7 +176,7 @@ final class RequiredData extends Validator implements Validatable
             "chars" => (string) $this->validData,
             "error" => $this->invalidDataError
         ];
-        
+
         $this->emptyError();
         $this->removeRequiredDataError();
 
@@ -191,7 +191,7 @@ final class RequiredData extends Validator implements Validatable
      * @param string $dataType type of data to be validated, that will be used as a index of first item in the array (types normaly used: name, url, email, password)
      * 
      * @return array|false
-    */
+     */
     protected function validateEmptyData(int|string $givenData, DataType $dataType): array|bool
     {
         if (empty($givenData)) {
@@ -202,7 +202,7 @@ final class RequiredData extends Validator implements Validatable
             ];
             return $data;
         }
-        
+
         return false;
     }
 
@@ -210,17 +210,17 @@ final class RequiredData extends Validator implements Validatable
      * se o erro génerico estiver vazio, é usado o erro definido pela função setError
      * caso o erro genério não esteja vazio será usado ele mesmo como erro quando
      * se o um dado estiver vazio
-    */
-    private function setRequiredDataError() : void
+     */
+    private function setRequiredDataError(): void
     {
-        $this->requiredDataError = empty($this->requiredDataError) ? 
-                                   $this->genericDataError : 
-                                   $this->requiredDataError;
+        $this->requiredDataError = empty($this->requiredDataError) ?
+            $this->genericDataError :
+            $this->requiredDataError;
     }
 
     /**
      * limpa a mensagem de erro depois de cada validação
-    */
+     */
     private function removeRequiredDataError(): void
     {
         $this->requiredDataError = "";
@@ -230,8 +230,8 @@ final class RequiredData extends Validator implements Validatable
      * insere a mensagem de erro retornada caso o dado o dado seja vazios
      * 
      * @param string $error erro caso o seja um dado vazio
-    */
-    public function setError(string $error) : void
+     */
+    public function setError(string $error): void
     {
         $this->requiredDataError = $error;
     }

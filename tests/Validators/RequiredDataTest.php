@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Radar\Core\DataLimiter;
 use Radar\Core\DataPattern;
 
-class RequiredDatar extends TestCase
+class RequiredDataTest extends TestCase
 {
     private RequiredData $requiredData;
     private const REQUIRED_DATA_ERROR = "Campo obrigratório!";
@@ -81,7 +81,7 @@ class RequiredDatar extends TestCase
 
         $this->assertSame($expectedNameData, $nameData);
     }
-    
+
     public function testValidNameDelimitation()
     {
         $name = 'feliz';
@@ -175,7 +175,7 @@ class RequiredDatar extends TestCase
             "error" => ""
         );
 
-        $this->assertSame($expectedContent, $urlData) ;
+        $this->assertSame($expectedContent, $urlData);
     }
 
     public function testInvalidUrl()
@@ -190,7 +190,7 @@ class RequiredDatar extends TestCase
             'error' => $invalidEmailError,
         );
 
-        $this->assertSame($expectedContent, $urlData) ;
+        $this->assertSame($expectedContent, $urlData);
     }
 
     public function testValidateString()
